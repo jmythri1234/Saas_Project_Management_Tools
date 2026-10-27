@@ -1,0 +1,714 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Project Details | ProjectFlow</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1e293b;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 245px;
+            background: #111827;
+            color: white;
+            padding: 28px 18px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #a5b4fc;
+            padding: 0 12px;
+            margin-bottom: 42px;
+        }
+
+        .nav-label {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            padding: 0 12px;
+            margin-bottom: 14px;
+        }
+
+        .nav-link {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 12px;
+            margin-bottom: 7px;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #3730a3;
+            color: white;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding-top: 30px;
+        }
+
+        .sidebar-bottom a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            padding: 32px;
+        }
+
+        .back-link {
+            display: inline-block;
+            color: #4f46e5;
+            font-size: 13px;
+            font-weight: 700;
+            text-decoration: none;
+            margin-bottom: 22px;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .project-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            gap: 20px;
+            flex-wrap: wrap;
+            margin-bottom: 28px;
+        }
+
+        .project-heading {
+            display: flex;
+            align-items: flex-start;
+            gap: 16px;
+        }
+
+        .project-icon {
+            width: 58px;
+            height: 58px;
+            background: #e0e7ff;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            flex-shrink: 0;
+        }
+
+        h1 {
+            font-size: 29px;
+            color: #0f172a;
+            margin-bottom: 9px;
+            overflow-wrap: anywhere;
+        }
+
+        .subtitle {
+            color: #64748b;
+            font-size: 14px;
+            line-height: 1.7;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            background: #4f46e5;
+            color: white;
+            padding: 13px 17px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .primary-btn:hover {
+            background: #4338ca;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(0, 1fr));
+            gap: 18px;
+            margin-bottom: 25px;
+        }
+
+        .stat-card {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 13px;
+            padding: 23px;
+        }
+
+        .stat-label {
+            color: #64748b;
+            font-size: 13px;
+            margin-bottom: 12px;
+        }
+
+        .stat-value {
+            color: #0f172a;
+            font-size: 28px;
+            font-weight: 800;
+        }
+
+        .panel {
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 15px;
+            padding: 26px;
+            margin-bottom: 24px;
+        }
+
+        .panel h2 {
+            font-size: 19px;
+            color: #0f172a;
+            margin-bottom: 18px;
+        }
+
+        .description {
+            font-size: 14px;
+            color: #475569;
+            line-height: 1.8;
+            white-space: pre-line;
+            overflow-wrap: anywhere;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 12px;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .progress-percent {
+            color: #4f46e5;
+        }
+
+        .progress-track {
+            height: 10px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #4f46e5, #818cf8);
+            border-radius: 20px;
+        }
+
+        .progress-note {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 12px;
+        }
+
+        .project-info-grid {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 20px;
+        }
+
+        .info-item {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            padding: 18px;
+            border-radius: 10px;
+        }
+
+        .info-label {
+            color: #64748b;
+            font-size: 12px;
+            margin-bottom: 9px;
+        }
+
+        .info-value {
+            color: #1e293b;
+            font-size: 14px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .status-badge {
+            display: inline-block;
+            background: #dcfce7;
+            color: #166534;
+            padding: 6px 10px;
+            border-radius: 20px;
+            font-size: 11px;
+            font-weight: 700;
+        }
+
+        .task-list {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 16px;
+            padding: 17px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .task-row:last-child {
+            border-bottom: none;
+        }
+
+        .task-title {
+            font-size: 14px;
+            font-weight: 700;
+            margin-bottom: 7px;
+            overflow-wrap: anywhere;
+        }
+
+        .task-description {
+            color: #64748b;
+            font-size: 12px;
+            line-height: 1.6;
+            overflow-wrap: anywhere;
+        }
+
+        .task-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-top: 9px;
+        }
+
+        .badge {
+            display: inline-block;
+            background: #f1f5f9;
+            color: #475569;
+            padding: 5px 8px;
+            border-radius: 6px;
+            font-size: 10px;
+            font-weight: 700;
+        }
+
+        .priority-high {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+
+        .priority-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .priority-low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .task-status {
+            background: #eef2ff;
+            color: #4338ca;
+        }
+
+        .empty-state {
+            text-align: center;
+            color: #64748b;
+            padding: 32px 15px;
+            font-size: 13px;
+            line-height: 1.8;
+        }
+
+        .empty-icon {
+            font-size: 36px;
+            margin-bottom: 12px;
+        }
+
+        .flash-message {
+            padding: 13px 16px;
+            border-radius: 9px;
+            margin-bottom: 18px;
+            font-size: 13px;
+        }
+
+        .flash-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .flash-warning,
+        .flash-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .flash-info {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        .bottom-actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .secondary-btn {
+            display: inline-block;
+            padding: 12px 16px;
+            border: 1px solid #cbd5e1;
+            color: #334155;
+            border-radius: 9px;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .secondary-btn:hover {
+            background: #f8fafc;
+        }
+
+        @media (max-width: 900px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .logo {
+                margin-bottom: 18px;
+            }
+
+            .nav-label {
+                margin-bottom: 8px;
+            }
+
+            .nav-link {
+                display: inline-block;
+                margin: 3px;
+                padding: 10px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 10px;
+                padding-top: 10px;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .project-header {
+                flex-direction: column;
+            }
+
+            h1 {
+                font-size: 24px;
+            }
+
+            .panel {
+                padding: 20px;
+            }
+
+            .project-info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .task-row {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">ProjectFlow.</div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <a href="{{ url_for('dashboard') }}" class="nav-link">
+            📊 Dashboard
+        </a>
+
+        <a href="{{ url_for('projects') }}" class="nav-link active">
+            📁 My Projects
+        </a>
+
+        <a href="{{ url_for('team') }}" class="nav-link">
+            👥 Team
+        </a>
+
+        <div class="sidebar-bottom">
+            <div class="nav-label">ACCOUNT</div>
+            <a href="{{ url_for('logout') }}">↪ Sign Out</a>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <a href="{{ url_for('projects') }}" class="back-link">
+            ← Back to My Projects
+        </a>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <header class="project-header">
+
+            <div class="project-heading">
+
+                <div class="project-icon">📁</div>
+
+                <div>
+                    <h1>{{ project.name }}</h1>
+
+                    <p class="subtitle">
+                        {{ project.description or 'No project description has been added.' }}
+                    </p>
+                </div>
+
+            </div>
+
+            <a
+                href="{{ url_for('tasks', project_id=project.id) }}"
+                class="primary-btn"
+            >
+                + Manage Tasks
+            </a>
+
+        </header>
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-label">📋 Total Tasks</div>
+                <div class="stat-value">{{ total_tasks }}</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">✅ Completed Tasks</div>
+                <div class="stat-value">{{ completed_tasks }}</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-label">📈 Project Progress</div>
+                <div class="stat-value">{{ progress }}%</div>
+            </div>
+
+        </section>
+
+        <section class="panel">
+
+            <h2>📊 Project Progress</h2>
+
+            <div class="progress-header">
+                <span>Completion</span>
+                <span class="progress-percent">{{ progress }}%</span>
+            </div>
+
+            <div class="progress-track">
+                <div
+                    class="progress-fill"
+                    style="width: {{ progress }}%;"
+                ></div>
+            </div>
+
+            <p class="progress-note">
+                {{ completed_tasks }} out of {{ total_tasks }} tasks completed.
+            </p>
+
+        </section>
+
+        <section class="panel">
+
+            <h2>📌 Project Information</h2>
+
+            <div class="project-info-grid">
+
+                <div class="info-item">
+                    <div class="info-label">Project Name</div>
+                    <div class="info-value">{{ project.name }}</div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Project Status</div>
+                    <div class="info-value">
+                        <span class="status-badge">{{ project.status }}</span>
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Created On</div>
+                    <div class="info-value">
+                        {{ project.created_at.strftime('%d %b %Y') }}
+                    </div>
+                </div>
+
+                <div class="info-item">
+                    <div class="info-label">Project Deadline</div>
+                    <div class="info-value">
+                        {% if project.due_date %}
+                            {{ project.due_date.strftime('%d %b %Y') }}
+                        {% else %}
+                            No deadline set
+                        {% endif %}
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+        <section class="panel">
+
+            <div style="display: flex; justify-content: space-between; align-items: center; gap: 15px; flex-wrap: wrap; margin-bottom: 20px;">
+
+                <h2 style="margin-bottom: 0;">📝 Project Tasks</h2>
+
+                <a
+                    href="{{ url_for('tasks', project_id=project.id) }}"
+                    class="secondary-btn"
+                >
+                    View All Tasks →
+                </a>
+
+            </div>
+
+            {% if project.tasks %}
+
+                <div class="task-list">
+
+                    {% for task in project.tasks|sort(attribute='created_at', reverse=true) %}
+
+                        {% if loop.index <= 5 %}
+
+                            <div class="task-row">
+
+                                <div>
+                                    <div class="task-title">{{ task.title }}</div>
+
+                                    <div class="task-description">
+                                        {{ task.description or 'No description added.' }}
+                                    </div>
+
+                                    <div class="task-meta">
+
+                                        <span class="badge task-status">
+                                            {{ task.status }}
+                                        </span>
+
+                                        <span class="badge priority-{{ task.priority|lower }}">
+                                            {{ task.priority }} Priority
+                                        </span>
+
+                                        {% if task.due_date %}
+                                            <span class="badge">
+                                                Due {{ task.due_date.strftime('%d %b %Y') }}
+                                            </span>
+                                        {% endif %}
+
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        {% endif %}
+
+                    {% endfor %}
+
+                </div>
+
+            {% else %}
+
+                <div class="empty-state">
+                    <div class="empty-icon">📋</div>
+                    <h3>No tasks added yet</h3>
+                    <p>Create tasks to track your project progress.</p>
+                    <br>
+
+                    <a
+                        href="{{ url_for('tasks', project_id=project.id) }}"
+                        class="primary-btn"
+                    >
+                        + Create First Task
+                    </a>
+                </div>
+
+            {% endif %}
+
+        </section>
+
+        <div class="bottom-actions">
+
+            <a href="{{ url_for('projects') }}" class="secondary-btn">
+                ← Back to Projects
+            </a>
+
+            <a
+                href="{{ url_for('tasks', project_id=project.id) }}"
+                class="primary-btn"
+            >
+                Manage Project Tasks →
+            </a>
+
+        </div>
+
+    </main>
+
+</div>
+
+</body>
+</html>

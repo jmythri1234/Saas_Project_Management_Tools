@@ -1,0 +1,780 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard | ProjectFlow</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: "Segoe UI", Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1e293b;
+        }
+
+        .layout {
+            display: flex;
+            min-height: 100vh;
+        }
+
+        .sidebar {
+            width: 245px;
+            background: #111827;
+            color: #ffffff;
+            padding: 28px 18px;
+            display: flex;
+            flex-direction: column;
+            flex-shrink: 0;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: 800;
+            color: #a5b4fc;
+            padding: 0 12px;
+            margin-bottom: 42px;
+        }
+
+        .nav-label {
+            color: #94a3b8;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 1.4px;
+            padding: 0 12px;
+            margin-bottom: 14px;
+        }
+
+        .nav-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 13px 12px;
+            margin-bottom: 7px;
+            border-radius: 9px;
+            font-size: 14px;
+            transition: 0.2s;
+        }
+
+        .nav-link:hover,
+        .nav-link.active {
+            background: #3730a3;
+            color: #ffffff;
+        }
+
+        .sidebar-bottom {
+            margin-top: auto;
+            padding-top: 30px;
+        }
+
+        .sidebar-bottom a {
+            display: block;
+            color: #cbd5e1;
+            text-decoration: none;
+            padding: 12px;
+            font-size: 14px;
+        }
+
+        .sidebar-bottom a:hover {
+            color: #ffffff;
+        }
+
+        .main-content {
+            flex: 1;
+            min-width: 0;
+            padding: 32px;
+        }
+
+        .topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 35px;
+        }
+
+        .topbar h1 {
+            font-size: 29px;
+            color: #0f172a;
+            margin-bottom: 7px;
+        }
+
+        .topbar p {
+            color: #64748b;
+            font-size: 14px;
+        }
+
+        .profile {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #ffffff;
+            padding: 10px 15px;
+            border: 1px solid #e2e8f0;
+            border-radius: 12px;
+        }
+
+        .avatar {
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            background: #e0e7ff;
+            color: #4338ca;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 18px;
+            font-weight: 800;
+        }
+
+        .profile-name {
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .profile-role {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 4px;
+        }
+
+        .welcome-banner {
+            background: linear-gradient(120deg, #4338ca, #6366f1);
+            color: #ffffff;
+            padding: 30px;
+            border-radius: 17px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.15);
+        }
+
+        .welcome-banner h2 {
+            font-size: 23px;
+            margin-bottom: 9px;
+        }
+
+        .welcome-banner p {
+            color: #e0e7ff;
+            font-size: 14px;
+            line-height: 1.6;
+        }
+
+        .primary-btn {
+            display: inline-block;
+            background: #ffffff;
+            color: #4338ca;
+            padding: 13px 18px;
+            border-radius: 9px;
+            font-weight: 700;
+            font-size: 13px;
+            text-decoration: none;
+            white-space: nowrap;
+            transition: 0.2s;
+        }
+
+        .primary-btn:hover {
+            background: #eef2ff;
+            transform: translateY(-1px);
+        }
+
+        .section-heading {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+            margin: 30px 0 18px;
+        }
+
+        .section-heading h2 {
+            font-size: 19px;
+            color: #0f172a;
+        }
+
+        .section-heading a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-size: 13px;
+            font-weight: 700;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, minmax(0, 1fr));
+            gap: 18px;
+        }
+
+        .stat-card {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            padding: 23px;
+            border-radius: 14px;
+            transition: 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 22px rgba(15, 23, 42, 0.05);
+        }
+
+        .stat-icon {
+            width: 43px;
+            height: 43px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 12px;
+            font-size: 21px;
+            margin-bottom: 19px;
+        }
+
+        .purple {
+            background: #ede9fe;
+        }
+
+        .blue {
+            background: #dbeafe;
+        }
+
+        .green {
+            background: #dcfce7;
+        }
+
+        .orange {
+            background: #ffedd5;
+        }
+
+        .stat-title {
+            font-size: 13px;
+            color: #64748b;
+            margin-bottom: 9px;
+        }
+
+        .stat-value {
+            font-size: 30px;
+            font-weight: 800;
+            color: #0f172a;
+        }
+
+        .stat-note {
+            color: #64748b;
+            font-size: 12px;
+            margin-top: 8px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1.5fr 1fr;
+            gap: 22px;
+            margin-top: 28px;
+        }
+
+        .panel {
+            background: #ffffff;
+            border: 1px solid #e2e8f0;
+            border-radius: 14px;
+            padding: 24px;
+            min-width: 0;
+        }
+
+        .panel-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 22px;
+        }
+
+        .panel-header h2 {
+            font-size: 17px;
+        }
+
+        .panel-header a {
+            color: #4f46e5;
+            text-decoration: none;
+            font-size: 12px;
+            font-weight: 700;
+        }
+
+        .project-item {
+            padding: 17px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .project-item:last-child {
+            border-bottom: none;
+        }
+
+        .project-info {
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            margin-bottom: 12px;
+        }
+
+        .project-name {
+            color: #1e293b;
+            font-weight: 700;
+            font-size: 14px;
+            text-decoration: none;
+            overflow-wrap: anywhere;
+        }
+
+        .project-name:hover {
+            color: #4f46e5;
+        }
+
+        .project-date {
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 6px;
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 5px 9px;
+            border-radius: 20px;
+            background: #dcfce7;
+            color: #166534;
+            font-size: 10px;
+            font-weight: 700;
+            white-space: nowrap;
+        }
+
+        .progress-track {
+            width: 100%;
+            height: 7px;
+            background: #e2e8f0;
+            border-radius: 20px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: #6366f1;
+            border-radius: 20px;
+        }
+
+        .task-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 12px;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .task-item:last-child {
+            border-bottom: none;
+        }
+
+        .task-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: #6366f1;
+            margin-top: 5px;
+            flex-shrink: 0;
+        }
+
+        .task-title {
+            font-size: 13px;
+            font-weight: 700;
+            overflow-wrap: anywhere;
+        }
+
+        .task-project {
+            color: #64748b;
+            font-size: 11px;
+            margin-top: 5px;
+        }
+
+        .task-date {
+            color: #ea580c;
+            font-size: 11px;
+            margin-top: 7px;
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 30px 10px;
+            color: #64748b;
+            font-size: 13px;
+            line-height: 1.7;
+        }
+
+        .empty-state a {
+            color: #4f46e5;
+            font-weight: 700;
+            text-decoration: none;
+        }
+
+        .flash-message {
+            padding: 13px 16px;
+            border-radius: 9px;
+            margin-bottom: 18px;
+            font-size: 13px;
+        }
+
+        .flash-success {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .flash-warning,
+        .flash-error {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .flash-info {
+            background: #dbeafe;
+            color: #1d4ed8;
+        }
+
+        @media (max-width: 1100px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, minmax(0, 1fr));
+            }
+
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 700px) {
+            .layout {
+                flex-direction: column;
+            }
+
+            .sidebar {
+                width: 100%;
+                padding: 18px;
+            }
+
+            .logo {
+                margin-bottom: 18px;
+            }
+
+            .nav-label {
+                margin-bottom: 8px;
+            }
+
+            .nav-link {
+                display: inline-flex;
+                margin: 3px;
+                padding: 10px;
+            }
+
+            .sidebar-bottom {
+                margin-top: 10px;
+                padding-top: 10px;
+            }
+
+            .main-content {
+                padding: 20px 15px;
+            }
+
+            .topbar {
+                align-items: flex-start;
+                flex-direction: column;
+            }
+
+            .welcome-banner {
+                align-items: flex-start;
+                flex-direction: column;
+                padding: 23px;
+            }
+
+            .stats-grid {
+                gap: 12px;
+            }
+
+            .stat-card {
+                padding: 17px;
+            }
+
+            .stat-value {
+                font-size: 25px;
+            }
+
+            .panel {
+                padding: 18px;
+            }
+        }
+
+        @media (max-width: 380px) {
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="layout">
+
+    <aside class="sidebar">
+
+        <div class="logo">ProjectFlow.</div>
+
+        <div class="nav-label">WORKSPACE</div>
+
+        <a href="{{ url_for('dashboard') }}" class="nav-link active">
+            📊 Dashboard
+        </a>
+
+        <a href="{{ url_for('projects') }}" class="nav-link">
+            📁 My Projects
+        </a>
+
+        <a href="{{ url_for('team') }}" class="nav-link">
+            👥 Team
+        </a>
+
+        <div class="sidebar-bottom">
+            <div class="nav-label">ACCOUNT</div>
+
+            <a href="{{ url_for('logout') }}">
+                ↪ Sign Out
+            </a>
+        </div>
+
+    </aside>
+
+    <main class="main-content">
+
+        <header class="topbar">
+
+            <div>
+                <h1>Dashboard</h1>
+                <p>Track your projects and keep your work moving forward.</p>
+            </div>
+
+            <div class="profile">
+                <div class="avatar">
+                    {{ current_user.name[:1]|upper }}
+                </div>
+
+                <div>
+                    <div class="profile-name">
+                        {{ current_user.name }}
+                    </div>
+                    <div class="profile-role">Workspace Member</div>
+                </div>
+            </div>
+
+        </header>
+
+        {% with messages = get_flashed_messages(with_categories=true) %}
+            {% if messages %}
+                {% for category, message in messages %}
+                    <div class="flash-message flash-{{ category }}">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+
+        <section class="welcome-banner">
+
+            <div>
+                <h2>Welcome back, {{ current_user.name }}! 👋</h2>
+                <p>
+                    Organize your projects, manage tasks, and achieve your goals.
+                    Everything you need is right here.
+                </p>
+            </div>
+
+            <a href="{{ url_for('projects') }}" class="primary-btn">
+                + Create Project
+            </a>
+
+        </section>
+
+        <section class="stats-grid">
+
+            <div class="stat-card">
+                <div class="stat-icon purple">📁</div>
+                <div class="stat-title">Total Projects</div>
+                <div class="stat-value">{{ total_projects }}</div>
+                <div class="stat-note">Projects in your workspace</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon blue">📋</div>
+                <div class="stat-title">Total Tasks</div>
+                <div class="stat-value">{{ total_tasks }}</div>
+                <div class="stat-note">Tasks across all projects</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon green">✅</div>
+                <div class="stat-title">Completed Tasks</div>
+                <div class="stat-value">{{ completed_tasks }}</div>
+                <div class="stat-note">Tasks marked completed</div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon orange">⏳</div>
+                <div class="stat-title">Pending Tasks</div>
+                <div class="stat-value">{{ pending_tasks }}</div>
+                <div class="stat-note">Tasks still to work on</div>
+            </div>
+
+        </section>
+
+        <section class="content-grid">
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>📁 Recent Projects</h2>
+                    <a href="{{ url_for('projects') }}">View All →</a>
+                </div>
+
+                {% if projects %}
+
+                    {% for project in projects[:5] %}
+
+                        {% set project_total = project.tasks|length %}
+                        {% set project_completed = project.tasks|selectattr('status', 'equalto', 'Completed')|list|length %}
+                        {% set project_progress = ((project_completed * 100 / project_total)|round|int) if project_total else 0 %}
+
+                        <div class="project-item">
+
+                            <div class="project-info">
+                                <div>
+                                    <a
+                                        href="{{ url_for('project_details', project_id=project.id) }}"
+                                        class="project-name"
+                                    >
+                                        {{ project.name }}
+                                    </a>
+
+                                    <div class="project-date">
+                                        {% if project.due_date %}
+                                            Due {{ project.due_date.strftime('%d %b %Y') }}
+                                        {% else %}
+                                            No deadline set
+                                        {% endif %}
+                                    </div>
+                                </div>
+
+                                <span class="status-badge">
+                                    {{ project_progress }}% Complete
+                                </span>
+                            </div>
+
+                            <div class="progress-track">
+                                <div
+                                    class="progress-fill"
+                                    style="width: {{ project_progress }}%;"
+                                ></div>
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-state">
+                        <div style="font-size: 35px; margin-bottom: 10px;">📂</div>
+                        <p>No projects yet.</p>
+                        <p>Create your first project to get started!</p>
+                        <br>
+                        <a href="{{ url_for('projects') }}">+ Create Project</a>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+            <div class="panel">
+
+                <div class="panel-header">
+                    <h2>⏰ Upcoming Deadlines</h2>
+                    <a href="{{ url_for('projects') }}">Projects →</a>
+                </div>
+
+                {% if upcoming_tasks %}
+
+                    {% for task in upcoming_tasks %}
+
+                        <div class="task-item">
+
+                            <div class="task-dot"></div>
+
+                            <div>
+                                <div class="task-title">
+                                    {{ task.title }}
+                                </div>
+
+                                <div class="task-project">
+                                    Project: {{ task.project.name }}
+                                </div>
+
+                                <div class="task-date">
+                                    📅 {{ task.due_date.strftime('%d %b %Y') }}
+                                </div>
+                            </div>
+
+                        </div>
+
+                    {% endfor %}
+
+                {% else %}
+
+                    <div class="empty-state">
+                        <div style="font-size: 35px; margin-bottom: 10px;">🎯</div>
+                        <p>No upcoming deadlines.</p>
+                        <p>Your upcoming tasks will appear here.</p>
+                        <br>
+                        <a href="{{ url_for('projects') }}">Manage Projects</a>
+                    </div>
+
+                {% endif %}
+
+            </div>
+
+        </section>
+
+        <section class="panel" style="margin-top: 24px;">
+
+            <div class="panel-header">
+                <h2>📈 Overall Task Progress</h2>
+                <span style="color: #4f46e5; font-weight: 800;">
+                    {{ completion_rate }}%
+                </span>
+            </div>
+
+            <div class="progress-track" style="height: 12px;">
+                <div
+                    class="progress-fill"
+                    style="width: {{ completion_rate }}%;"
+                ></div>
+            </div>
+
+            <p style="color: #64748b; font-size: 13px; margin-top: 13px;">
+                {{ completed_tasks }} of {{ total_tasks }} tasks completed.
+                Keep going!
+            </p>
+
+        </section>
+
+    </main>
+
+</div>
+
+</body>
+</html>

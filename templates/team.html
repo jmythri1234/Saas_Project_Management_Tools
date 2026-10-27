@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Workspace | ProjectFlow</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: #f5f7fb;
+            color: #1e293b;
+        }
+
+        nav {
+            background: #ffffff;
+            padding: 18px 7%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #4f46e5;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: #475569;
+            font-size: 14px;
+            font-weight: 600;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #4f46e5;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+
+        .welcome {
+            margin-bottom: 28px;
+        }
+
+        .welcome h1 {
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+
+        .welcome p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .profile-card {
+            background: linear-gradient(135deg, #4f46e5, #7c3aed);
+            color: white;
+            padding: 30px;
+            border-radius: 18px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            margin-bottom: 28px;
+            box-shadow: 0 10px 25px rgba(79, 70, 229, 0.15);
+        }
+
+        .avatar {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .profile-card h2 {
+            margin-bottom: 8px;
+        }
+
+        .profile-card p {
+            color: #e0e7ff;
+            line-height: 1.6;
+        }
+
+        .section-title {
+            font-size: 22px;
+            margin-bottom: 18px;
+        }
+
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+            gap: 20px;
+        }
+
+        .feature-card {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 15px;
+            padding: 24px;
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: #eef2ff;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 23px;
+            margin-bottom: 18px;
+        }
+
+        .feature-card h3 {
+            font-size: 17px;
+            margin-bottom: 10px;
+        }
+
+        .feature-card p {
+            font-size: 14px;
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .notice {
+            margin-top: 28px;
+            background: #fffbeb;
+            border: 1px solid #fde68a;
+            border-radius: 14px;
+            padding: 22px;
+        }
+
+        .notice h3 {
+            color: #92400e;
+            margin-bottom: 8px;
+        }
+
+        .notice p {
+            color: #78350f;
+            line-height: 1.7;
+            font-size: 14px;
+        }
+
+        .actions {
+            display: flex;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-top: 25px;
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 18px;
+            border-radius: 9px;
+            text-decoration: none;
+            font-weight: bold;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: #4f46e5;
+            color: white;
+        }
+
+        .btn-secondary {
+            background: white;
+            color: #4f46e5;
+            border: 1px solid #c7d2fe;
+        }
+
+        footer {
+            text-align: center;
+            padding: 25px 15px;
+            color: #94a3b8;
+            font-size: 13px;
+            margin-top: 30px;
+        }
+
+        @media (max-width: 600px) {
+            nav {
+                padding: 16px 5%;
+            }
+
+            .container {
+                margin-top: 28px;
+            }
+
+            .welcome h1 {
+                font-size: 27px;
+            }
+
+            .profile-card {
+                align-items: flex-start;
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav>
+        <div class="logo">ProjectFlow</div>
+
+        <div class="nav-links">
+            <a href="{{ url_for('dashboard') }}">Dashboard</a>
+            <a href="{{ url_for('projects') }}">Projects</a>
+            <a href="{{ url_for('team') }}" class="active">Team</a>
+            <a href="{{ url_for('logout') }}">Logout</a>
+        </div>
+    </nav>
+
+    <main class="container">
+
+        <section class="welcome">
+            <h1>Team Workspace 👥</h1>
+            <p>
+                Organize your work, manage projects, and prepare for
+                better collaboration with ProjectFlow.
+            </p>
+        </section>
+
+        <section class="profile-card">
+            <div class="avatar">
+                {{ current_user.name[0]|upper }}
+            </div>
+
+            <div>
+                <h2>{{ current_user.name }}</h2>
+                <p>Project Owner</p>
+                <p>Your personal workspace is ready to use.</p>
+            </div>
+        </section>
+
+        <h2 class="section-title">Workspace Features</h2>
+
+        <section class="features">
+
+            <article class="feature-card">
+                <div class="feature-icon">📁</div>
+                <h3>Project Organization</h3>
+                <p>
+                    Create projects, add descriptions, set deadlines,
+                    and keep your work organized in one place.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <div class="feature-icon">✅</div>
+                <h3>Task Management</h3>
+                <p>
+                    Create tasks, assign priorities, update task
+                    statuses, and track your progress.
+                </p>
+            </article>
+
+            <article class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3>Progress Tracking</h3>
+                <p>
+                    Monitor your project activity and completed tasks
+                    from your personal dashboard.
+                </p>
+            </article>
+
+        </section>
+
+        <section class="notice">
+            <h3>🚀 Team Collaboration — Coming Soon</h3>
+            <p>
+                This version supports your personal project workspace.
+                Adding team members, assigning tasks to users, and
+                shared team collaboration require additional features
+                that are not implemented yet.
+            </p>
+        </section>
+
+        <div class="actions">
+            <a href="{{ url_for('dashboard') }}" class="btn btn-primary">
+                Go to Dashboard
+            </a>
+
+            <a href="{{ url_for('projects') }}" class="btn btn-secondary">
+                View Projects
+            </a>
+        </div>
+
+    </main>
+
+    <footer>
+        © 2026 ProjectFlow. Plan Better. Work Smarter.
+    </footer>
+
+</body>
+</html>
